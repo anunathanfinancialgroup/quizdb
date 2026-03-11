@@ -1,0 +1,172 @@
+{
+  // ============================================================
+  //  vercel.json — Universal Vercel Configuration Template
+  //  Copy this file to your PROJECT ROOT on GitHub.
+  //  Uncomment only the section that matches your stack.
+  //  Docs: https://vercel.com/docs/projects/project-configuration
+  // ============================================================
+
+  // ── YOUR PROJECT NAME (optional but recommended) ─────────────
+  "name": "my-app",
+
+  // ── FRAMEWORK PRESET ─────────────────────────────────────────
+  // Let Vercel know which framework you're using.
+  // Options: "nextjs" | "vite" | "create-react-app" | "nuxtjs"
+  //          "sveltekit" | "astro" | "remix" | null
+  "framework": "nextjs",
+
+  // ── BUILD SETTINGS ────────────────────────────────────────────
+  // Override the default build command if needed.
+  // Default for Next.js  → "next build"
+  // Default for Vite     → "vite build"
+  // Default for CRA      → "react-scripts build"
+  "buildCommand": "npm run build",
+
+  // ── OUTPUT / DIST DIRECTORY ───────────────────────────────────
+  // Tell Vercel where your built files live.
+  //   Next.js  → omit this line (Vercel handles it automatically)
+  //   Vite     → "dist"
+  //   CRA      → "build"
+  //   Astro    → "dist"
+  //   Custom   → whatever your build outputs
+  // "outputDirectory": "dist",
+
+  // ── INSTALL COMMAND ───────────────────────────────────────────
+  // Override if you use pnpm, yarn, or bun instead of npm.
+  // "installCommand": "pnpm install",
+  // "installCommand": "yarn install",
+
+  // ── NODE.JS VERSION ───────────────────────────────────────────
+  // Pin a specific Node version to avoid surprise upgrades.
+  "engines": {
+    "node": "20.x"
+  },
+
+  // ============================================================
+  //  SECTION 1 — SPA REWRITES (React Router, Vue Router, etc.)
+  //  Use this if you have client-side routing and pages 404
+  //  when accessed directly or on refresh.
+  //  HOW IT WORKS: Every URL → index.html → your JS router takes over.
+  // ============================================================
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ],
+
+  // ============================================================
+  //  SECTION 2 — API ROUTES / PROXY (uncomment to use)
+  //  Useful when your frontend and backend are separate services,
+  //  or you want to avoid CORS by proxying through Vercel.
+  // ============================================================
+  // "rewrites": [
+  //   {
+  //     "source": "/api/:path*",
+  //     "destination": "https://your-backend.com/api/:path*"
+  //   },
+  //   {
+  //     "source": "/(.*)",
+  //     "destination": "/index.html"
+  //   }
+  // ],
+
+  // ============================================================
+  //  SECTION 3 — REDIRECTS
+  //  Permanently (308) or temporarily (307) redirect old URLs.
+  //  Great for SEO when you rename/move pages.
+  // ============================================================
+  // "redirects": [
+  //   {
+  //     "source": "/old-page",
+  //     "destination": "/new-page",
+  //     "permanent": true
+  //   },
+  //   {
+  //     "source": "/blog/:slug",
+  //     "destination": "/posts/:slug",
+  //     "permanent": false
+  //   }
+  // ],
+
+  // ============================================================
+  //  SECTION 4 — HEADERS
+  //  Add security, CORS, or caching headers to responses.
+  // ============================================================
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        // Security headers (recommended for all apps)
+        { "key": "X-Content-Type-Options",    "value": "nosniff" },
+        { "key": "X-Frame-Options",           "value": "DENY" },
+        { "key": "X-XSS-Protection",          "value": "1; mode=block" },
+        { "key": "Referrer-Policy",           "value": "strict-origin-when-cross-origin" }
+      ]
+    },
+    {
+      // Long-term cache for static assets (JS, CSS, images with hashed names)
+      "source": "/static/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      // Allow your frontend to call your own API routes
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin",  "value": "*" },
+        { "key": "Access-Control-Allow-Methods", "value": "GET, POST, PUT, DELETE, OPTIONS" },
+        { "key": "Access-Control-Allow-Headers", "value": "Content-Type, Authorization" }
+      ]
+    }
+  ],
+
+  // ============================================================
+  //  SECTION 5 — ENVIRONMENT VARIABLES
+  //  Define build-time env vars here (runtime vars go in Dashboard).
+  //  NEVER put secrets here — use Vercel Dashboard for those.
+  // ============================================================
+  // "env": {
+  //   "NEXT_PUBLIC_APP_URL": "https://my-app.vercel.app",
+  //   "NEXT_PUBLIC_API_BASE": "/api"
+  // },
+
+  // ============================================================
+  //  SECTION 6 — REGIONS
+  //  Deploy serverless functions close to your users or database.
+  //  Options: "iad1" (US East), "sfo1" (US West), "lhr1" (London),
+  //           "fra1" (Frankfurt), "sin1" (Singapore), "hnd1" (Tokyo)
+  // ============================================================
+  // "regions": ["iad1"],
+
+  // ============================================================
+  //  SECTION 7 — FUNCTION CONFIG (API Routes / Serverless)
+  //  Set memory and max duration for serverless functions.
+  // ============================================================
+  // "functions": {
+  //   "api/**/*.js": {
+  //     "memory": 1024,
+  //     "maxDuration": 30
+  //   }
+  // },
+
+  // ============================================================
+  //  SECTION 8 — CLEAN URLS & TRAILING SLASH (Static Sites)
+  //  cleanUrls: serve /about instead of /about.html
+  //  trailingSlash: normalize /about/ → /about
+  // ============================================================
+  // "cleanUrls": true,
+  // "trailingSlash": false,
+
+  // ============================================================
+  //  SECTION 9 — CRON JOBS (Pro/Enterprise plans only)
+  //  Schedule serverless functions to run on a cron schedule.
+  // ============================================================
+  // "crons": [
+  //   {
+  //     "path": "/api/cron/daily-job",
+  //     "schedule": "0 8 * * *"
+  //   }
+  // ]
+}
